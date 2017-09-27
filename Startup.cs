@@ -8,23 +8,30 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using vega.Models;
 
 namespace vega
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-        
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment env;
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json")
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<VegaDbContextV2>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddMvc();
-            services.AddDbContext<VegaDbContext>(options => options.UseSqlServer("Default"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
