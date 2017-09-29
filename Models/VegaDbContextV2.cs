@@ -8,5 +8,7 @@ namespace vega.Models
         {
             
         }
+
+        public DbSet<Make> Makes { get; set; }
     }
 }
