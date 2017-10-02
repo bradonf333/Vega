@@ -10,7 +10,7 @@ import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.com
         ServerModule,
         AppModuleShared
     ],
-    declarations: [VehicleFormComponent]
+    declarations: [ VehicleFormComponent ]
 })
 export class AppModule {
 }
