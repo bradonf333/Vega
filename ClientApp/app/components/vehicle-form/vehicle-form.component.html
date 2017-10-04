@@ -1,18 +1,42 @@
-<h1>New Vehicle</h1>
+<div>
 
-<form>
+  <div class='panel panel-primary'>
 
-  <div class="form-group">
-    <label for="make">Make</label>
-    <select id="make" class="form-control">
-      <option value=""></option>
-      <option *ngFor="let m of makes" value="{{ m.id }}">{{ m.name }}</option>
-    </select>
+    <div class='panel-heading'>
+      <h4>New Vehicle</h4>
+    </div>
+
+    <div class='panel-body'>
+
+      <form class="form-horizontal">
+
+        <div class='row'>
+          <div class="form-group">
+            <label class="col-md-2 control-label" for="make">Make</label>
+            <div class="col-md-6">
+              <select id="make" class="form-control">
+                <option value=""></option>
+                <option *ngFor="let m of makes" value="{{ m.id }}">{{ m.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class='row'>
+            <div class="form-group">
+              <label class="col-md-2 control-label" for="model">Model</label>
+              <div class="col-md-6">
+                <select id="model" class="form-control">
+                  <option value=""></option>
+                  <option value=""></option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+      </form>
+    </div>
+
   </div>
 
-  <div class="form-group">
-    <label for="model">Model</label>
-    <select id="model" class="form-control"></select>
-  </div>
-
-</form>
+</div>
