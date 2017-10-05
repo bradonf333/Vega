@@ -13,9 +13,16 @@
           <div class="form-group">
             <label class="col-md-2 control-label" for="make">Make</label>
             <div class="col-md-6">
-              <select id="make" name="make" class="form-control" (change)="onMakeChange()" [(ngModel)]="vehicle.make">
+              <select id="make" 
+                      name="make" 
+                      class="form-control" 
+                      (change)="onMakeChange()" 
+                      [(ngModel)]="vehicle.make">
                 <option value=""></option>
-                <option *ngFor="let m of makes" value="{{ m.id }}">{{ m.name }}</option>
+                <option *ngFor="let m of makes"
+                        value="{{ m.id }}">
+                        {{ m.name }}
+                </option>
               </select>
             </div>
           </div>
@@ -27,7 +34,10 @@
             <div class="col-md-6">
               <select id="model" class="form-control">
                   <option value=""></option>
-                  <option *ngFor="let m of models" value="{{ m.id }}">{{ m.name }}</option>
+                  <option *ngFor="let m of models"
+                          value="{{ m.id }}">
+                          {{ m.name }}
+                  </option>
                 </select>
             </div>
           </div>
@@ -39,8 +49,10 @@
           </label>
           <div class="row" *ngFor="let f of features">
             <label class="col-md-offset-1 form-check-label">
-              <input class="form-check-input" type="checkbox" value="" id="feature{{ f.id }}">
-              {{ f.name }}
+              <input class="form-check-input" 
+                     type="checkbox"
+                     id="feature{{ f.id }}">
+                     {{ f.name }}
             </label>
           </div>
         </div>
