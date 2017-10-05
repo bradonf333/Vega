@@ -13,11 +13,7 @@
           <div class="form-group">
             <label class="col-md-2 control-label" for="make">Make</label>
             <div class="col-md-6">
-              <select id="make" 
-                      name="make" 
-                      class="form-control" 
-                      (change)="onMakeChange()" 
-                      [(ngModel)]="vehicle.make">
+              <select id="make" name="make" class="form-control" (change)="onMakeChange()" [(ngModel)]="vehicle.make">
                 <option value=""></option>
                 <option *ngFor="let m of makes"
                         value="{{ m.id }}">
@@ -40,6 +36,25 @@
                   </option>
                 </select>
             </div>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div class="form-group">
+          </div>
+        </div>
+
+        <div class="form-check">
+          <label class="control-label">
+              <h4>Is this vehicle registered</h4>
+          </label>
+          <div class="row">
+            <label class="col-md-offset-1 radio-inline" for="registered">
+                <input type="radio" id="registered" value="true" name="registered" checked>Yes
+            </label>
+              <label class="radio-inline" for="notRegistered">
+                <input type="radio" id="notRegistered" value="false" name="registered">No
+            </label>
           </div>
         </div>
 
