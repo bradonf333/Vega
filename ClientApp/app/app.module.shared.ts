@@ -1,3 +1,4 @@
+import { FeatureService } from './service/feature.service';
 import { MakeService } from './service/make.service';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { NgModule } from '@angular/core';
@@ -34,7 +35,7 @@ import { CounterComponent } from './components/counter/counter.component';
             { path: '**', redirectTo: 'home' }
         ])
     ],
-    providers: [ MakeService ]
+    providers: [ MakeService, FeatureService ]
 })
 export class AppModuleShared {
 }
