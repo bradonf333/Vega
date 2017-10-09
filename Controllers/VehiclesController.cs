@@ -7,7 +7,7 @@ namespace vega.Controllers
     public class VehiclesController : Controller
     {
         [HttpPost]
-        public IActionResult CreateVehicle(Vehicle vehicle)
+        public IActionResult CreateVehicle([FromBody] Vehicle vehicle)
         {
             return Ok(vehicle);
         }
