@@ -17,6 +17,7 @@ namespace vega.Controllers
             this.dbContext = dbContext;
             this.mapper = mapper;
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateVehicle([FromBody] VehicleResource vehicleResource)
         {
@@ -30,6 +31,26 @@ namespace vega.Controllers
             vehicle.LastUpdate = DateTime.Now;
 
             dbContext.Vehicles.Add(vehicle);
+            await dbContext.SaveChangesAsync();
+
+            var vehicleResult = mapper.Map<Vehicle, VehicleResource>(vehicle);
+            return Ok(vehicleResult);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] VehicleResource vehicleResource)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            var vehicle = await dbContext.Vehicles.FindAsync(id);
+            
+            mapper.Map<VehicleResource, Vehicle>(vehicleResource, vehicle);
+
+            vehicle.LastUpdate = DateTime.Now;
+
             await dbContext.SaveChangesAsync();
 
             var vehicleResult = mapper.Map<Vehicle, VehicleResource>(vehicle);
