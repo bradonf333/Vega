@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using vega.Controllers.Resources;
 using vega.Models;
 
@@ -25,7 +26,7 @@ namespace vega.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             var vehicle = mapper.Map<VehicleResource, Vehicle>(vehicleResource);
 
             vehicle.LastUpdate = DateTime.Now;
@@ -44,9 +45,10 @@ namespace vega.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
-            var vehicle = await dbContext.Vehicles.FindAsync(id);
-            
+
+            var vehicle = await dbContext.Vehicles.Include(v => v.Features)
+                .SingleOrDefaultAsync(v => v.Id == id);
+
             mapper.Map<VehicleResource, Vehicle>(vehicleResource, vehicle);
 
             vehicle.LastUpdate = DateTime.Now;
