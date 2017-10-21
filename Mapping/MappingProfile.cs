@@ -14,7 +14,7 @@ namespace vega.Mapping
             CreateMap<Make, MakeResource>();
             CreateMap<Model, ModelResource>();
             CreateMap<Feature, KeyValuePairResource>();
-            CreateMap<Vehicle, VehicleResource>()
+            CreateMap<Vehicle, SaveVehicleResource>()
                 .ForMember(vr => vr.Contact, opt => opt.MapFrom(
                     v => new ContactResource
                     {
@@ -27,7 +27,7 @@ namespace vega.Mapping
                 )));
 
             // API Resource to Domain - used when creating new vehicle
-            CreateMap<VehicleResource, Vehicle>()
+            CreateMap<SaveVehicleResource, Vehicle>()
                 .ForMember(v => v.Id, opt => opt.Ignore())
                 .ForMember(v => v.ContactName, opt => opt.MapFrom(vr => vr.Contact.Name))
                 .ForMember(v => v.ContactEmail, opt => opt.MapFrom(vr => vr.Contact.Email))
