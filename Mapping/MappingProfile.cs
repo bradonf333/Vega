@@ -16,11 +16,12 @@ namespace vega.Mapping
             CreateMap<Feature, KeyValuePairResource>();
             CreateMap<Vehicle, VehicleResource>()
                 .ForMember(vr => vr.Contact, opt => opt.MapFrom(
-                    v => new ContactResource {
+                    v => new ContactResource
+                    {
                         Name = v.ContactName,
                         Email = v.ContactEmail,
                         Phone = v.ContactPhone
-                }))
+                    }))
                 .ForMember(vr => vr.Features, opt => opt.MapFrom(v => v.Features.Select(
                     vf => vf.FeatureId
                 )));
@@ -32,10 +33,11 @@ namespace vega.Mapping
                 .ForMember(v => v.ContactEmail, opt => opt.MapFrom(vr => vr.Contact.Email))
                 .ForMember(v => v.ContactPhone, opt => opt.MapFrom(vr => vr.Contact.Phone))
                 .ForMember(v => v.Features, opt => opt.Ignore())
-                .AfterMap((vr, v) => {
-                    
+                .AfterMap((vr, v) =>
+                {
+
                     // Remove unselected features
-                    var removedFeatures = v.Features.Select(features => !vr.Features.Contains(features.FeatureId));
+                    var removedFeatures = v.Features.Where(features => !vr.Features.Contains(features.FeatureId));
 
                     foreach (var features in removedFeatures)
                     {
@@ -43,12 +45,12 @@ namespace vega.Mapping
                     }
 
                     // Add selected features
-                    foreach (var id in vr.Features)
+                    var addedFeatures = vr.Features.Where(id => !v.Features.Any(f => f.FeatureId == id))
+                        .Select(id => new VehicleFeature { FeatureId = id });
+
+                    foreach (var features in addedFeatures)
                     {
-                        if (!v.Features.Any(f => f.FeatureId == id))
-                        {
-                            v.Features.Add(new VehicleFeature {FeatureId = id});
-                        }
+                        v.Features.Add(features);
                     }
                 });
         }
