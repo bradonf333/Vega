@@ -85,6 +85,7 @@ namespace vega.Controllers
         {
             var vehicle = await dbContext.Vehicles
                 .Include(v => v.Features)
+                .ThenInclude(vf => vf.Feature)
                 .SingleOrDefaultAsync(v => v.Id == id);
 
             if (vehicle == null)
@@ -92,7 +93,7 @@ namespace vega.Controllers
                 return NotFound();
             }
 
-            var vehicleResource = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
+            var vehicleResource = mapper.Map<Vehicle, VehicleResource>(vehicle);
             
             return Ok(vehicleResource);
         }
