@@ -85,7 +85,9 @@ namespace vega.Controllers
         {
             var vehicle = await dbContext.Vehicles
                 .Include(v => v.Features)
-                .ThenInclude(vf => vf.Feature)
+                    .ThenInclude(vf => vf.Feature)
+                .Include(v => v.Model)
+                    .ThenInclude(m => m.Make)
                 .SingleOrDefaultAsync(v => v.Id == id);
 
             if (vehicle == null)
