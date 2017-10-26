@@ -2,9 +2,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using vega.Models;
 
-namespace ProgrammingLog.Models
+namespace vega.Models
 {
-    public class VehicleRepository
+    public class VehicleRepository : IVehicleRepository
     {
         private readonly VegaDbContextV2 dbContext;
         public VehicleRepository(VegaDbContextV2 dbContext)
