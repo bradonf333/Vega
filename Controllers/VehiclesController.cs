@@ -12,12 +12,12 @@ namespace vega.Controllers
     public class VehiclesController : Controller
     {
         private readonly IMapper mapper;
-        private readonly VegaDbContextV2 dbContext;
         private readonly IVehicleRepository repository;
-        public VehiclesController(IMapper mapper, VegaDbContextV2 dbContext, IVehicleRepository repository)
+        private readonly IUnitOfWork unitOfWork;
+        public VehiclesController(IMapper mapper, IVehicleRepository repository, IUnitOfWork unitOfWork)
         {
+            this.unitOfWork = unitOfWork;
             this.repository = repository;
-            this.dbContext = dbContext;
             this.mapper = mapper;
         }
 
@@ -35,8 +35,9 @@ namespace vega.Controllers
 
             vehicle = await repository.GetVehicleAsync(vehicle.Id);
 
-            dbContext.Vehicles.Add(vehicle);
-            await dbContext.SaveChangesAsync();
+            repository.Add(vehicle);
+
+            await unitOfWork.CompleteAsync();
 
             var vehicleResult = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
             return Ok(vehicleResult);
@@ -61,7 +62,7 @@ namespace vega.Controllers
 
             vehicle.LastUpdate = DateTime.Now;
 
-            await dbContext.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
 
             var vehicleResult = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
             return Ok(vehicleResult);
@@ -70,15 +71,15 @@ namespace vega.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteVehicle(int id)
         {
-            var vehicle = await dbContext.Vehicles.FindAsync(id);
+            var vehicle = await repository.GetVehicleAsync(id, includeRelated: false);
 
             if (vehicle == null)
             {
                 return NotFound();
             }
 
-            dbContext.Remove(vehicle);
-            await dbContext.SaveChangesAsync();
+            repository.Remove(vehicle);
+            await unitOfWork.CompleteAsync();
 
             return Ok(id);
         }
