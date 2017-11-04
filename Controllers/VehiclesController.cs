@@ -35,6 +35,8 @@ namespace vega.Controllers
 
             vehicle = await repository.GetVehicleAsync(vehicle.Id);
 
+            Console.WriteLine("Vehicle Info: " + vehicle);
+
             repository.Add(vehicle);
 
             await unitOfWork.CompleteAsync();
