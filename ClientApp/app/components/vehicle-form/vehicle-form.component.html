@@ -8,6 +8,8 @@
       </div>
     </div>
 
+    <span> {{vehicle | json }} </span>
+
     <div class="panel-body">
       <form class="form-horizontal">
 
@@ -15,7 +17,11 @@
           <div class="form-group">
             <label class="col-md-2 control-label" for="make">Make</label>
             <div class="col-md-6">
-              <select id="make" name="make" class="form-control" (change)="onMakeChange()" [(ngModel)]="vehicle.make">
+              <select id="make" 
+                      name="makeId" 
+                      class="form-control" 
+                      (change)="onMakeChange()" 
+                      [(ngModel)]="vehicle.makeId">
                 <option value=""></option>
                 <option *ngFor="let m of makes" value="{{ m.id }}">
                   {{ m.name }}
@@ -29,7 +35,10 @@
           <div class="form-group">
             <label class="col-md-2 control-label" for="model">Model</label>
             <div class="col-md-6">
-              <select id="model" class="form-control">
+              <select id="model"
+                      name="modelId"
+                      class="form-control"
+                      [(ngModel)]="vehicle.modelId">
                 <option value=""></option>
                 <option *ngFor="let m of models" value="{{ m.id }}">
                   {{ m.name }}
@@ -45,10 +54,19 @@
           </label>
           <div class="row">
             <label class="col-md-offset-1 radio-inline" for="registered">
-              <input type="radio" id="registered" value="true" name="registered" checked>Yes
+              <input type="radio" 
+                     id="registered" 
+                     value="true" 
+                     name="isRegistered" 
+                     [(ngModel)]="vehicle.isRegistered" 
+                     checked>Yes
             </label>
             <label class="radio-inline" for="notRegistered">
-              <input type="radio" id="notRegistered" value="false" name="registered">No
+              <input type="radio" 
+                     id="notRegistered" 
+                     value="false" 
+                     name="isRegistered"
+                     [(ngModel)]="vehicle.isRegistered">No
             </label>
           </div>
         </div>
@@ -59,7 +77,10 @@
           </label>
           <div class="row" *ngFor="let f of features">
             <label class="col-md-offset-1 form-check-label">
-              <input class="form-check-input" type="checkbox" id="feature{{ f.id }}"> {{ f.name }}
+              <input class="form-check-input" 
+                     type="checkbox" 
+                     id="feature{{ f.id }}"
+                     (change)="onFeatureToggle(f.id, $event)"> {{ f.name }}
             </label>
           </div>
         </div>
