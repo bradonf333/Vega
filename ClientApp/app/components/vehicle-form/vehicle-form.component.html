@@ -93,7 +93,11 @@
             <div class="form-group">
               <label class="col-md-2 control-label" for="contactName">Name</label>
               <div class="col-md-4">
-                <input type="text" class="form-control" id="contactName">
+                <input type="text" 
+                       class="form-control" 
+                       id="contactName"
+                       [(ngModel)]="vehicle.contact.name"
+                       name="contactName" >
               </div>
             </div>
           </div>
@@ -101,7 +105,11 @@
             <div class="form-group">
               <label class="col-md-2 control-label" for="contactPhone">Phone</label>
               <div class="col-md-4">
-                <input type="tel" class="form-control" id="contactPhone">
+                <input type="tel" 
+                       class="form-control" 
+                       id="contactPhone"
+                       [(ngModel)]="vehicle.contact.phone"
+                       name="contactPhone" >
               </div>
             </div>
           </div>
@@ -109,7 +117,11 @@
             <div class="form-group">
               <label class="col-md-2 control-label" for="contactEmail">Email</label>
               <div class="col-md-4">
-                <input type="text" class="form-control" id="contactEmail">
+                <input type="text"
+                       class="form-control" 
+                       id="contactEmail"
+                       [(ngModel)]="vehicle.contact.email"
+                       name="contactEmail" >
               </div>
             </div>
           </div>
