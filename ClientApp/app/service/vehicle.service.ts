@@ -8,6 +8,7 @@ export class VehicleService {
   // Web-api url for Makes and Features
   private makesUrl = '/api/makes';
   private featuresUrl = '/api/features';
+  private vehiclesUrl = '/api/vehicles';
   
   constructor(private http: Http) { }
 
@@ -19,6 +20,11 @@ export class VehicleService {
   getFeatures() {
     return this.http.get(this.featuresUrl)
       .map(res => res.json());
+  }
+
+  createVehicle(vehicle: any) {
+    return this.http.post(this.vehiclesUrl, vehicle)
+    .map(res => res.json());
   }
 
 }

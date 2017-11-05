@@ -54,4 +54,9 @@ export class VehicleFormComponent implements OnInit {
     }
   }
 
+  submit() {
+    this.vehicleService.createVehicle(this.vehicle)
+      .subscribe(x => console.log(x));
+  }
+
 }

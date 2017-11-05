@@ -11,7 +11,7 @@
     <span> {{vehicle | json }} </span>
 
     <div class="panel-body">
-      <form class="form-horizontal">
+      <form class="form-horizontal" (ngSubmit)="submit()" >
 
         <div class="row">
           <div class="form-group">
