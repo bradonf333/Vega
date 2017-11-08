@@ -1,6 +1,7 @@
 import { FetchDataComponent } from './../fetchdata/fetchdata.component';
 import { VehicleService } from './../../service/vehicle.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -18,9 +19,23 @@ export class VehicleFormComponent implements OnInit {
 
   features: any[];
 
-  constructor(private vehicleService: VehicleService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private vehicleService: VehicleService) { 
+
+      route.params.subscribe(p => {
+        this.vehicle.id = +p['id'];
+      });
+    }
 
   ngOnInit() {
+
+    this.vehicleService.getVehicle(this.vehicle.id)
+      .subscribe(v => {
+        this.vehicle = v;
+      });
+
     this.vehicleService.getMakes()
       .subscribe(makes => {
         this.makes = makes;
