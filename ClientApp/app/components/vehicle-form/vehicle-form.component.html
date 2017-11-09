@@ -50,10 +50,10 @@
           </label>
           <div class="row">
             <label class="col-md-offset-1 radio-inline" for="registered">
-              <input type="radio" id="registered" value="true" name="isRegistered" [(ngModel)]="vehicle.isRegistered" checked>Yes
+              <input type="radio" id="registered" [value]="true" name="isRegistered" [(ngModel)]="vehicle.isRegistered" checked>Yes
             </label>
             <label class="radio-inline" for="notRegistered">
-              <input type="radio" id="notRegistered" value="false" name="isRegistered" [(ngModel)]="vehicle.isRegistered">No
+              <input type="radio" id="notRegistered" [value]="false" name="isRegistered" [(ngModel)]="vehicle.isRegistered">No
             </label>
           </div>
         </div>
@@ -64,7 +64,8 @@
           </label>
           <div class="row" *ngFor="let f of features">
             <label class="col-md-offset-1 form-check-label">
-              <input class="form-check-input" type="checkbox" id="feature{{ f.id }}" (change)="onFeatureToggle(f.id, $event)"> {{ f.name }}
+              <input class="form-check-input" type="checkbox" id="feature{{ f.id }}" (change)="onFeatureToggle(f.id, $event)"
+              [checked]="vehicle.features.includes(f.id)"> {{ f.name }}
             </label>
           </div>
         </div>
