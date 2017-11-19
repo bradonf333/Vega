@@ -92,8 +92,22 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit() {
-    this.vehicleService.createVehicle(this.vehicle)
-      .subscribe(x => console.log(x));
+    if (this.vehicle.id) {
+      this.vehicleService.updateVehicle(this.vehicle)
+        .subscribe(x => alert("The Vehicle has been successfully updated!"));
+    }
+    else {
+      this.vehicleService.createVehicle(this.vehicle)
+        .subscribe(x => console.log(x));
+    }
   }
 
+  delete() {
+    if (confirm("Are you sure?")) {
+      this.vehicleService.deleteVehicle(this.vehicle.id)
+        .subscribe(x => {
+          this.router.navigate(['/home']);
+        });
+    }
+  }
 }
