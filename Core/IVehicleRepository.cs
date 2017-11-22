@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace vega.Models
@@ -7,5 +8,6 @@ namespace vega.Models
          Task<Vehicle> GetVehicleAsync(int id, bool includeRelated = true);
          void Add(Vehicle vehicle);
          void Remove(Vehicle vehicle);
+        Task<IEnumerable<Vehicle>> GetVehiclesAsync();
     }
 }

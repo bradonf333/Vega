@@ -43,4 +43,9 @@ export class VehicleService {
       .map(res => res.json);
   }
 
+  getVehicles() {
+    return this.http.get(this.vehiclesUrl)
+      .map(res => res.json());
+  }
+
 }

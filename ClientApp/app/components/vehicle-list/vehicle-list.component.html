@@ -1,0 +1,42 @@
+<div class='panel panel-primary'>
+
+  <div class='panel-heading'>
+    <h3>Vehicle List</h3>
+  </div>
+
+  <div class='panel-body'>
+
+    <form class='form-horizontal'>
+
+      <div class="table-responsive">
+        <a [routerLink]="['/vehicles/new']" class="btn btn-primary">New Vehicle</a>
+        
+        <br>
+        <br>
+
+        <table class="table" *ngIf='vehicles && vehicles.length'>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Make</th>
+              <th>Model</th>
+              <th>Contact Name</th>
+              <th>View Vehicle</th>
+            </tr>
+            <tr *ngFor='let vehicle of vehicles'>
+              <td><a [routerLink]="['/vehicles/', vehicle.id]">{{ vehicle.id }}</a></td>
+              <td>{{ vehicle.make.name }}</td>
+              <td>{{ vehicle.model.name }}</td>
+              <td>{{ vehicle.contact.name }}</td>
+              <td>
+                <a [routerLink]="['/vehicles/', vehicle.id]">View</a>
+              </td>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+    </form>
+
+  </div>
+</div>
