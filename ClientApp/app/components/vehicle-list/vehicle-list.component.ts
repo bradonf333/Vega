@@ -9,7 +9,7 @@ import { VehicleService } from '../../service/vehicle.service';
 })
 export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[];
-  allVehicles: Vehicle[];
+  // allVehicles: Vehicle[];
   makes: KeyValuePair[];
   filter: any = {};
 
@@ -19,18 +19,27 @@ export class VehicleListComponent implements OnInit {
     this.vehicleService.getMakes()
       .subscribe(makes => this.makes = makes);
 
-    this.vehicleService.getVehicles()
-      .subscribe(vehicles => this.vehicles = this.allVehicles = vehicles);
+    this.populateVehicles();
+    // .subscribe(vehicles => this.vehicles = this.allVehicles = vehicles); used for Client-Side filtering
+  }
+
+  private populateVehicles() {
+    this.vehicleService.getVehicles(this.filter)
+      .subscribe(vehicles => this.vehicles = vehicles);
   }
 
   onFilterChange() {
-    var vehicles = this.allVehicles;
 
-    if (this.filter.makeId) {
-      vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
-    }
+    this.populateVehicles();
 
-    this.vehicles = vehicles;
+    // Client-Side Filtering
+    // var vehicles = this.allVehicles;
+
+    // if (this.filter.makeId) {
+    //   vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
+    // }
+
+    // this.vehicles = vehicles;
   }
 
   resetFilter() {
