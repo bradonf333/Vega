@@ -23,7 +23,7 @@ namespace vega.Models {
                 .SingleOrDefaultAsync (v => v.Id == id);
         }
 
-        public async Task<IEnumerable<Vehicle>> GetVehiclesAsync (Filter filter) {
+        public async Task<IEnumerable<Vehicle>> GetVehiclesAsync (VehicleQuery filter) {
             var query = dbContext.Vehicles
                 .Include (v => v.Model)
                     .ThenInclude (m => m.Make)
