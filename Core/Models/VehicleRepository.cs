@@ -45,7 +45,7 @@ namespace vega.Models {
                     ["id"] = v => v.Id
                 };
 
-                query = ApplyOrdering(queryObj, query, columnsMap);
+            query = ApplyOrdering (queryObj, query, columnsMap);
 
             return await query.ToListAsync ();
 
