@@ -13,7 +13,7 @@ namespace vega.Models {
             this.dbContext = dbContext;
         }
         public async Task<Vehicle> GetVehicleAsync (int id, bool includeRelated = true) {
-            
+
             if (!includeRelated) {
                 return await dbContext.Vehicles.FindAsync (id);
             }
@@ -34,23 +34,35 @@ namespace vega.Models {
                 .ThenInclude (vf => vf.Feature)
                 .AsQueryable ();
 
-            var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>>>()
-            {
-                ["make"] = v => v.Model.Make.Name,
-                ["model"] = v => v.Model.Name,
-                ["contactName"] = v => v.ContactName,
-                ["id"] = v => v.Id
-            };
+            var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>> > () {
 
-            if (queryObj.IsSortAscending) {
-                query = query.OrderBy(columnsMap[queryObj.SortBy]);
-            }
-            else {
-                query = query.OrderByDescending(columnsMap[queryObj.SortBy]);
-            }
+                    ["make"] = v => v.Model.Make.Name,
+
+                    ["model"] = v => v.Model.Name,
+
+                    ["contactName"] = v => v.ContactName,
+
+                    ["id"] = v => v.Id
+                };
+
+                query = ApplyOrdering(queryObj, query, columnsMap);
 
             return await query.ToListAsync ();
 
+        }
+
+        private IQueryable<Vehicle> ApplyOrdering (
+            VehicleQuery queryObj,
+            IQueryable<Vehicle> query,
+            Dictionary<string, Expression<Func<Vehicle, object>> > columnsMap
+        ) {
+            if (queryObj.IsSortAscending) {
+                query = query.OrderBy (columnsMap[queryObj.SortBy]);
+            } else {
+                query = query.OrderByDescending (columnsMap[queryObj.SortBy]);
+            }
+
+            return query;
         }
 
         public void Add (Vehicle vehicle) {
