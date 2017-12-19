@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using vega.Core.Models;
+using vega.Extensions;
 
 namespace vega.Models {
     public class VehicleRepository : IVehicleRepository {
@@ -37,32 +38,14 @@ namespace vega.Models {
             var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>> > () {
 
                     ["make"] = v => v.Model.Make.Name,
-
                     ["model"] = v => v.Model.Name,
-
-                    ["contactName"] = v => v.ContactName,
-
-                    ["id"] = v => v.Id
+                    ["contactName"] = v => v.ContactName
                 };
 
-            query = ApplyOrdering (queryObj, query, columnsMap);
+            query = query.ApplyOrdering(queryObj, columnsMap);
 
             return await query.ToListAsync ();
 
-        }
-
-        private IQueryable<Vehicle> ApplyOrdering (
-            VehicleQuery queryObj,
-            IQueryable<Vehicle> query,
-            Dictionary<string, Expression<Func<Vehicle, object>> > columnsMap
-        ) {
-            if (queryObj.IsSortAscending) {
-                query = query.OrderBy (columnsMap[queryObj.SortBy]);
-            } else {
-                query = query.OrderByDescending (columnsMap[queryObj.SortBy]);
-            }
-
-            return query;
         }
 
         public void Add (Vehicle vehicle) {
