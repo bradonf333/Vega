@@ -11,7 +11,7 @@ export class VehicleListComponent implements OnInit {
   vehicles: Vehicle[];
   // allVehicles: Vehicle[];
   makes: KeyValuePair[];
-  filter: any = {};
+  query: any = {};
 
   constructor(private vehicleService: VehicleService) { }
 
@@ -24,26 +24,40 @@ export class VehicleListComponent implements OnInit {
   }
 
   private populateVehicles() {
-    this.vehicleService.getVehicles(this.filter)
+    this.vehicleService.getVehicles(this.query)
       .subscribe(vehicles => this.vehicles = vehicles);
   }
 
   onFilterChange() {
-
     this.populateVehicles();
+  }
 
-    // Client-Side Filtering
-    // var vehicles = this.allVehicles;
+  sortBy(columnName: any) {
+    console.log('');
+    console.log('Loading...')
+    console.log('sortBy =', this.query.sortBy);
+    console.log('columnName =', columnName);
+    console.log('isSortAscending =', this.query.isSortAscending);
 
-    // if (this.filter.makeId) {
-    //   vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
-    // }
+    if (this.query.sortBy === columnName) {
+      this.query.isSortAscending = !this.query.isSortAscending;
+      console.log('Second Click of Column', columnName);
+    } else {
+      this.query.sortBy = columnName;
+      this.query.isSortAscending = true;
+      console.log('First Click of Column', columnName);
+    }
 
-    // this.vehicles = vehicles;
+    console.log('');
+    console.log('Done....')
+    console.log('sortBy =', this.query.sortBy);
+    console.log('columnName =', columnName);
+    console.log('isSortAscending =', this.query.isSortAscending);
+    this.populateVehicles();
   }
 
   resetFilter() {
-    this.filter = {};
+    this.query = {};
     this.onFilterChange();
   }
 

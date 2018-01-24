@@ -16,7 +16,7 @@ namespace vega.Models {
         public async Task<Vehicle> GetVehicleAsync (int id, bool includeRelated = true) {
 
             if (!includeRelated) {
-                return await dbContext.Vehicles.FindAsync (id);
+                return await dbContext.Vehicles.FindAsync(id);
             }
 
             return await dbContext.Vehicles
@@ -36,7 +36,6 @@ namespace vega.Models {
                 .AsQueryable ();
 
             var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>> > () {
-
                     ["make"] = v => v.Model.Make.Name,
                     ["model"] = v => v.Model.Name,
                     ["contactName"] = v => v.ContactName
