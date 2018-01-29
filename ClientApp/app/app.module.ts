@@ -10,7 +10,7 @@ import { PaginationComponent } from './shared/pagination.component';
         ServerModule,
         AppModuleShared
     ],
-    declarations: [PaginationComponent]
+    declarations: []
 })
 export class AppModule {
 }
