@@ -9,6 +9,6 @@ namespace vega.Models
          Task<Vehicle> GetVehicleAsync(int id, bool includeRelated = true);
          void Add(Vehicle vehicle);
          void Remove(Vehicle vehicle);
-        Task<IEnumerable<Vehicle>> GetVehiclesAsync(VehicleQuery filter);
+        Task<QueryResult<Vehicle>> GetVehiclesAsync(VehicleQuery filter);
     }
 }

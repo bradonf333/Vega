@@ -27,13 +27,16 @@ namespace vega.Models {
                 .SingleOrDefaultAsync (v => v.Id == id);
         }
 
-        public async Task<IEnumerable<Vehicle>> GetVehiclesAsync (VehicleQuery queryObj) {
+        public async Task<QueryResult<Vehicle>> GetVehiclesAsync (VehicleQuery queryObj) {
+            
+            var result = new QueryResult<Vehicle>();
+
             var query = dbContext.Vehicles
                 .Include (v => v.Model)
-                .ThenInclude (m => m.Make)
-                .Include (v => v.Features)
-                .ThenInclude (vf => vf.Feature)
-                .AsQueryable ();
+                    .ThenInclude (m => m.Make)
+                // .Include (v => v.Features)
+                // .ThenInclude (vf => vf.Feature)
+                .AsQueryable();
 
             var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>> > () {
                     ["make"] = v => v.Model.Make.Name,
@@ -43,9 +46,11 @@ namespace vega.Models {
 
             query = query.ApplyOrdering(queryObj, columnsMap);
             
-            query = query.ApplyPaging(queryObj);
+            result.TotalItems = await query.CountAsync();
 
-            return await query.ToListAsync ();
+            result.Items = query.ApplyPaging(queryObj);
+
+            return result;
 
         }
 

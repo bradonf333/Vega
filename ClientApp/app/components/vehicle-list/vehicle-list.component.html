@@ -25,7 +25,7 @@
         <br>
         <br>
 
-        <table class="table" *ngIf='vehicles && vehicles.length'>
+        <table class="table" *ngIf='queryResult.items && queryResult.items.length'>
           <thead>
             <tr>
               <th *ngFor="let c of columns">
@@ -41,7 +41,7 @@
               </th>
             </tr>
 
-            <tr *ngFor='let vehicle of vehicles'>
+            <tr *ngFor='let vehicle of queryResult.items'>
               <td>
                 <a [routerLink]="['/vehicles/', vehicle.id]">{{ vehicle.id }}</a>
               </td>
@@ -55,6 +55,8 @@
           </thead>
         </table>
       </div>
+
+      <pagination [total-items]="queryResult.totalItems" [page-size]="query.pageSize" (page-changed)="onPageChange($event)"></pagination>
 
     </form>
 

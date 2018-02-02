@@ -2,14 +2,14 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
-  selector: 'app-pagination',
+  selector: 'pagination',
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css']
 })
 export class PaginationComponent implements OnChanges {
 
   @Input('total-items') totalItems: any;
-  @Input('page-size') pageSize = 10;
+  @Input('page-size') pageSize = 1;
   @Output('page-changed') pageChanged = new EventEmitter();
   pages: any[];
   currentPage = 1;

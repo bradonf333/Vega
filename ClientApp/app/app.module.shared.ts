@@ -1,3 +1,4 @@
+import { PaginationComponent } from './shared/pagination.component';
 import { VehicleService } from './service/vehicle.service';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { NgModule } from '@angular/core';
@@ -12,7 +13,6 @@ import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
-import { PaginationComponent } from './shared/pagination.component';
 
 @NgModule({
     declarations: [

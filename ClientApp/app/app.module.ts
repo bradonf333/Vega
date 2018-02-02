@@ -9,8 +9,7 @@ import { PaginationComponent } from './shared/pagination.component';
     imports: [
         ServerModule,
         AppModuleShared
-    ],
-    declarations: []
+    ]
 })
 export class AppModule {
 }
