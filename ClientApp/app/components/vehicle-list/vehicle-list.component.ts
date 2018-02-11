@@ -9,14 +9,16 @@ import { VehicleService } from '../../service/vehicle.service';
   styleUrls: ['./vehicle-list.component.css']
 })
 export class VehicleListComponent implements OnInit {
+
+  private readonly PAGE_SIZE = 3;
   queryResult: any = {};
   // allVehicles: Vehicle[];
   makes: KeyValuePair[];
   query: any = {
-    pageSize: 3
+    pageSize: this.PAGE_SIZE
   };
   columns = [
-    { title: 'Id'},
+    { title: 'Id' },
     { title: 'Model', key: 'model', isSortable: true },
     { title: 'Make', key: 'make', isSortable: true },
     { title: 'Contact Name', key: 'contactName', isSortable: true },
@@ -36,10 +38,6 @@ export class VehicleListComponent implements OnInit {
   private populateVehicles() {
     this.vehicleService.getVehicles(this.query)
       .subscribe(result => this.queryResult = result);
-  }
-
-  onFilterChange() {
-    this.populateVehicles();
   }
 
   sortBy(columnName: any) {
@@ -66,9 +64,17 @@ export class VehicleListComponent implements OnInit {
     this.populateVehicles();
   }
 
+  onFilterChange() {
+    this.query.page = 1;
+    this.populateVehicles();
+  }
+
   resetFilter() {
-    this.query = {};
-    this.onFilterChange();
+    this.query = {
+      page: 1,
+      pageSize: this.PAGE_SIZE
+    };
+    this.populateVehicles();
   }
 
   onPageChange(page: any) {

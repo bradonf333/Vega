@@ -38,6 +38,8 @@ namespace vega.Models {
                 // .ThenInclude (vf => vf.Feature)
                 .AsQueryable();
 
+            query = query.ApplyFiltering(queryObj);
+
             var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>> > () {
                     ["make"] = v => v.Model.Make.Name,
                     ["model"] = v => v.Model.Name,
