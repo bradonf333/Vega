@@ -13,6 +13,7 @@ import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
+import { VehicleViewComponent } from './components/vehicle-view/vehicle-view.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { VehicleListComponent } from './components/vehicle-list/vehicle-list.com
         HomeComponent,
         VehicleFormComponent,
         VehicleListComponent,
-        PaginationComponent
+        PaginationComponent,
+        VehicleViewComponent
     ],
     imports: [
         CommonModule,
@@ -34,6 +36,7 @@ import { VehicleListComponent } from './components/vehicle-list/vehicle-list.com
             { path: 'vehicles', component: VehicleListComponent },
             { path: 'vehicles/new', component: VehicleFormComponent },
             { path: 'vehicles/:id', component: VehicleFormComponent },
+            { path: 'vehicleView/:id', component: VehicleViewComponent },
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },

@@ -39,6 +39,10 @@ export class VehicleFormComponent implements OnInit {
     route.params.subscribe(p => {
       this.vehicle.id = +p['id'];
     });
+
+    this.features = [];
+    this.makes = [];
+    this.models = [];
   }
 
   ngOnInit() {
