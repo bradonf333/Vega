@@ -16,6 +16,7 @@ export class VehicleFormComponent implements OnInit {
 
   makes: any[];
   models: any[];
+  features: any[];
   vehicle: SaveVehicle = {
     id: 0,
     makeId: 0,
@@ -28,8 +29,6 @@ export class VehicleFormComponent implements OnInit {
       phone: ''
     }
   };
-
-  features: any[];
 
   constructor(
     private route: ActivatedRoute,
@@ -101,8 +100,9 @@ export class VehicleFormComponent implements OnInit {
         .subscribe(x => alert("The Vehicle has been successfully updated!"));
     }
     else {
+      this.vehicle.id = 0;
       this.vehicleService.createVehicle(this.vehicle)
-        .subscribe(x => console.log(x));
+        .subscribe(x => alert("The Vehicle has been successfully added!"));
     }
   }
 

@@ -25,7 +25,9 @@ export class VehicleListComponent implements OnInit {
     { title: 'View Vehicle' },
   ];
 
-  constructor(private vehicleService: VehicleService) { }
+  constructor(private vehicleService: VehicleService) {
+    this.makes = [];
+   }
 
   ngOnInit() {
     this.vehicleService.getMakes()
