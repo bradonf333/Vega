@@ -1,213 +1,76 @@
+<h1>Vehicle</h1>
 <div>
 
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab">Profile</a>
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="nav-item active">
+      <a class="nav-link" href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Vehicle</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#panel2" role="tab">Follow</a>
+    <li role="presentation" class="nav-item">
+      <a class="nav-link" href="#photos" aria-controls="photos" role="tab" data-toggle="tab">Photos</a>
     </li>
   </ul>
 
-  <!-- Tab panels -->
-  <div class="tab-content card">
-    <!--Panel 1-->
-    <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
-      <br>
-      <div class="panel panel-primary">
+  <!-- Tab panes -->
+  <div class="tab-content" *ngIf="vehicle">
+    <br>
+    <!-- Vehicle tab -->
 
+    <div role="tabpanel" class="tab-pane fade in active" id="basic">
+      <div class="panel panel-primary">
         <div class="panel-heading">
           <div class="panel-title">
-            <h4>New Vehicle</h4>
+            <h3>Vehicle Info</h3>
           </div>
         </div>
         <div class="panel-body">
-
-          <form class="form-horizontal">
-
-            <div class="row">
-              <div class="form-group">
-                <label class="col-md-2 control-label" for="make">Make</label>
-                <div class="col-md-6">
-                  <select disabled id="make" name="makeId" class="form-control" (change)="onMakeChange()" [(ngModel)]="vehicle.makeId">
-                    <option value=""></option>
-                    <option *ngFor="let m of makes" value="{{ m.id }}">
-                      {{ m.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="form-group">
-                <label class="col-md-2 control-label" for="model">Model</label>
-                <div class="col-md-6">
-                  <select disabled id="model" name="modelId" class="form-control" [(ngModel)]="vehicle.modelId">
-                    <option value=""></option>
-                    <option *ngFor="let m of models" value="{{ m.id }}">
-                      {{ m.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-check">
-              <label class="control-label">
-                <h4>Is this vehicle registered</h4>
-              </label>
-              <div class="row">
-                <label class="col-md-offset-1 radio-inline" for="registered">
-                  <input disabled type="radio" id="registered" [value]="true" name="isRegistered" [(ngModel)]="vehicle.isRegistered" checked>Yes
-                </label>
-                <label class="radio-inline" for="notRegistered">
-                  <input disabled type="radio" id="notRegistered" [value]="false" name="isRegistered" [(ngModel)]="vehicle.isRegistered">No
-                </label>
-              </div>
-            </div>
-
-            <div class="form-check">
-              <label class="control-label">
-                <h4>Features</h4>
-              </label>
-              <div class="row" *ngFor="let f of features">
-                <label class="col-md-offset-1 form-check-label">
-                  <input disabled class="form-check-input" type="checkbox" id="feature{{ f.id }}" (change)="onFeatureToggle(f.id, $event)" [checked]="vehicle.features.includes(f.id)"> {{ f.name }}
-                </label>
-              </div>
-            </div>
-
-            <div class="form-check">
-                <label class="control-label">
-                  <h4>Contact</h4>
-                </label>
-                <div class="row">
-                  <div class="form-group">
-                    <label class="col-md-2 control-label" for="contactName">Name</label>
-                    <div class="col-md-4">
-                      <input disabled type="text" class="form-control" id="contactName" [(ngModel)]="vehicle.contact.name" name="contactName" required #contactName="ngModel">
-                      <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">Please specify the Contact Name.</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                    <div class="form-group">
-                      <label class="col-md-2 control-label" for="contactPhone">Phone</label>
-                      <div class="col-md-4">
-                        <input disabled type="tel" class="form-control" id="contactPhone" [(ngModel)]="vehicle.contact.phone" name="contactPhone">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group">
-                      <label class="col-md-2 control-label" for="contactEmail">Email</label>
-                      <div class="col-md-4">
-                        <input disabled type="text" class="form-control" id="contactEmail" [(ngModel)]="vehicle.contact.email" name="contactEmail">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-          </form>
-
+          <h2>Basics</h2>
+          <ul>
+            <li>
+              <label class="label2">Make:</label> {{ vehicle.make.name }}</li>
+            <li>
+              <label class="label2">Model:</label> {{ vehicle.model.name }}</li>
+            <li>
+              <label class="label2">Registered:</label> {{ vehicle.isRegistered ? 'Yes' : 'No' }}
+          </ul>
+          <h2>Features</h2>
+          <ul>
+            <li *ngFor="let f of vehicle.features">{{ f.name }}</li>
+          </ul>
+          <h2>Contact</h2>
+          <ul>
+            <li>
+              <label class="label2">Contact Name:</label> {{ vehicle.contact.name }}</li>
+            <li>
+              <label class="label2">Contact Phone:</label> {{ vehicle.contact.phone }}</li>
+            <li>
+              <label class="label2">Contact Email:</label> {{ vehicle.contact.email }}</li>
+          </ul>
+          <br/>
+          <p>
+            <a class="btn btn-primary" [routerLink]="['/vehicles/', vehicle.id]">Edit</a>
+            <button class="btn btn-danger" (click)="delete()">Delete</button>
+            <a class="btn btn-default" [routerLink]="['/vehicles']">View All Vehicles</a>
+          </p>
         </div>
       </div>
     </div>
-    <!--/.Panel 1-->
 
-    <!--Panel 2-->
-    <div class="tab-pane fade" id="panel2" role="tabpanel">
-      <br>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae
-        placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae
-        placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
-    </div>
-    <!--/.Panel 2-->
-
-    <!-- <div class="panel panel-primary">
-
-    <div class="panel-heading">
-      <div class="panel-title">
-        <h4>View Vehicle</h4>
+    <!-- Photos tab -->
+    <div role="tabpanel" class="tab-pane fade in" id="photos">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <h3>Photos</h3>
+          </div>
+        </div>
+        <div class="panel-body">
+          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. At nesciunt architecto, rerum minima fugiat dignissimos,
+            eius ullam neque et fuga aspernatur veritatis quis tenetur. Officiis voluptatibus aspernatur mollitia unde atque?</p>
+          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. At nesciunt architecto, rerum minima fugiat dignissimos,
+            eius ullam neque et fuga aspernatur veritatis quis tenetur. Officiis voluptatibus aspernatur mollitia unde atque?</p>
+        </div>
       </div>
     </div>
-
-    <div class="panel-body">
-      
-      <ul class="nav nav-tabs">
-        <li class="nav-item"><a href="#" class="nav-link">View Vehicle</a>
-          <form class="form-horizontal">
-    
-            <div class="form-check">
-              <label class="control-label">
-                <h4>Is this vehicle registered</h4>
-              </label>
-              <div class="row">
-                <label class="col-md-offset-1 radio-inline" for="registered">
-                  <input type="radio" id="registered" [value]="true" name="isRegistered" disabled [(ngModel)]="vehicle.isRegistered" checked>Yes
-                </label>
-                <label class="radio-inline" for="notRegistered">
-                  <input type="radio" id="notRegistered" [value]="false" name="isRegistered" disabled [(ngModel)]="vehicle.isRegistered">No
-                </label>
-              </div>
-            </div>
-    
-            <div class="form-check">
-              <label class="control-label">
-                <h4>Features</h4>
-              </label>
-              <div class="row" *ngFor="let f of features">
-                <label class="col-md-offset-1 form-check-label">
-                  <input disabled class="form-check-input" type="checkbox" id="feature{{ f.id }}" (change)="onFeatureToggle(f.id, $event)"
-                    [checked]="vehicle.features.includes(f.id)"> {{ f.name }}
-                </label>
-              </div>
-            </div>
-    
-            <div class="form-check">
-              <label class="control-label">
-                <h4>Contact</h4>
-              </label>
-              <div class="row">
-                <div class="form-group">
-                  <label class="col-md-2 control-label" for="contactName">Name</label>
-                  <div class="col-md-4">
-                    <input disabled type="text" class="form-control" id="contactName" [(ngModel)]="vehicle.contact.name" name="contactName">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group">
-                  <label class="col-md-2 control-label" for="contactPhone">Phone</label>
-                  <div class="col-md-4">
-                    <input disabled type="tel" class="form-control" id="contactPhone" [(ngModel)]="vehicle.contact.phone" name="contactPhone">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group">
-                  <label class="col-md-2 control-label" for="contactEmail">Email</label>
-                  <div class="col-md-4">
-                    <input disabled type="text" class="form-control" id="contactEmail" [(ngModel)]="vehicle.contact.email" name="contactEmail">
-                  </div>
-                </div>
-              </div>
-            </div>
-    
-            <a [routerLink]="['/vehicles/', vehicle.id]">
-              <button *ngIf="vehicle.id" class="btn btn-primary" type="button">Edit</button>
-            </a>
-            <button *ngIf="vehicle.id" class="btn btn-danger" type="button" (click)="delete()">Delete</button>
-    
-          </form>
-        </li>
-      </ul>
-      
-    </div>
-
-  </div> -->
-
   </div>
+</div>
