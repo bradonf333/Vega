@@ -11,9 +11,10 @@ using vega.Models;
 namespace vega.Migrations
 {
     [DbContext(typeof(VegaDbContextV2))]
-    partial class VegaDbContextV2ModelSnapshot : ModelSnapshot
+    [Migration("20180214012758_AddPhoto")]
+    partial class AddPhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
