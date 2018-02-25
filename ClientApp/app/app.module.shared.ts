@@ -14,6 +14,7 @@ import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 import { VehicleViewComponent } from './components/vehicle-view/vehicle-view.component';
+import { PhotoService } from "./service/photo.service";
 
 @NgModule({
     declarations: [
@@ -43,7 +44,7 @@ import { VehicleViewComponent } from './components/vehicle-view/vehicle-view.com
             { path: '**', redirectTo: 'home' }
         ])
     ],
-    providers: [ VehicleService ]
+    providers: [ VehicleService, PhotoService ]
 })
 export class AppModuleShared {
 }
