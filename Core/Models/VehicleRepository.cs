@@ -7,47 +7,52 @@ using Microsoft.EntityFrameworkCore;
 using vega.Core.Models;
 using vega.Extensions;
 
-namespace vega.Models {
-    public class VehicleRepository : IVehicleRepository {
+namespace vega.Models
+{
+    public class VehicleRepository : IVehicleRepository
+    {
         private readonly VegaDbContextV2 dbContext;
-        public VehicleRepository (VegaDbContextV2 dbContext) {
+        public VehicleRepository(VegaDbContextV2 dbContext)
+        {
             this.dbContext = dbContext;
         }
-        public async Task<Vehicle> GetVehicleAsync (int id, bool includeRelated = true) {
+        public async Task<Vehicle> GetVehicleAsync(int id, bool includeRelated = true)
+        {
 
-            if (!includeRelated) {
+            if (!includeRelated)
+            {
                 return await dbContext.Vehicles.FindAsync(id);
             }
 
             return await dbContext.Vehicles
-                .Include (v => v.Features)
-                .ThenInclude (vf => vf.Feature)
-                .Include (v => v.Model)
-                .ThenInclude (m => m.Make)
-                .SingleOrDefaultAsync (v => v.Id == id);
+                .Include(v => v.Features)
+                .ThenInclude(vf => vf.Feature)
+                .Include(v => v.Model)
+                .ThenInclude(m => m.Make)
+                .SingleOrDefaultAsync(v => v.Id == id);
         }
 
-        public async Task<QueryResult<Vehicle>> GetVehiclesAsync (VehicleQuery queryObj) {
-            
+        public async Task<QueryResult<Vehicle>> GetVehiclesAsync(VehicleQuery queryObj)
+        {
+
             var result = new QueryResult<Vehicle>();
 
             var query = dbContext.Vehicles
-                .Include (v => v.Model)
-                    .ThenInclude (m => m.Make)
+                .Include(v => v.Model)
+                .ThenInclude(m => m.Make)
                 // .Include (v => v.Features)
                 // .ThenInclude (vf => vf.Feature)
                 .AsQueryable();
 
             query = query.ApplyFiltering(queryObj);
 
-            var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>> > () {
-                    ["make"] = v => v.Model.Make.Name,
-                    ["model"] = v => v.Model.Name,
-                    ["contactName"] = v => v.ContactName
+            var columnsMap = new Dictionary<string, Expression<Func<Vehicle, object>> > ()
+                {
+                    ["make"] = v => v.Model.Make.Name, ["model"] = v => v.Model.Name, ["contactName"] = v => v.ContactName
                 };
 
             query = query.ApplyOrdering(queryObj, columnsMap);
-            
+
             result.TotalItems = await query.CountAsync();
 
             result.Items = query.ApplyPaging(queryObj);
@@ -56,12 +61,14 @@ namespace vega.Models {
 
         }
 
-        public void Add (Vehicle vehicle) {
-            dbContext.Vehicles.Add (vehicle);
+        public void Add(Vehicle vehicle)
+        {
+            dbContext.Vehicles.Add(vehicle);
         }
 
-        public void Remove (Vehicle vehicle) {
-            dbContext.Vehicles.Remove (vehicle);
+        public void Remove(Vehicle vehicle)
+        {
+            dbContext.Vehicles.Remove(vehicle);
         }
     }
 }
