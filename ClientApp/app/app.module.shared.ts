@@ -1,3 +1,4 @@
+import { BrowserXhr } from '@angular/http';
 import { PaginationComponent } from './shared/pagination.component';
 import { VehicleService } from './service/vehicle.service';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
@@ -15,6 +16,7 @@ import { CounterComponent } from './components/counter/counter.component';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 import { VehicleViewComponent } from './components/vehicle-view/vehicle-view.component';
 import { PhotoService } from "./service/photo.service";
+import { ProgressService, BrowserXhrWithProgress } from "./service/progress.service";
 
 @NgModule({
     declarations: [
@@ -44,7 +46,10 @@ import { PhotoService } from "./service/photo.service";
             { path: '**', redirectTo: 'home' }
         ])
     ],
-    providers: [ VehicleService, PhotoService ]
+    providers: [
+        { provide: BrowserXhr, useClass: BrowserXhrWithProgress },
+        VehicleService, PhotoService, ProgressService 
+    ]
 })
 export class AppModuleShared {
 }
