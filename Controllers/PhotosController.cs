@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace vega.Controllers
     {
         private readonly IHostingEnvironment host;
         private readonly IVehicleRepository repository;
+        private readonly IPhotoRepository photoRepository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
         private readonly PhotoSettings photoSettings;
@@ -25,6 +27,7 @@ namespace vega.Controllers
         public PhotosController(
             IHostingEnvironment host,
             IVehicleRepository repository,
+            IPhotoRepository photoRepository,
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IOptionsSnapshot<PhotoSettings> options)
@@ -33,7 +36,16 @@ namespace vega.Controllers
             this.mapper = mapper;
             this.unitOfWork = unitOfWork;
             this.repository = repository;
+            this.photoRepository = photoRepository;
             this.host = host;
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<PhotosResource>> GetPhotos(int vehicleId)
+        {
+            var photos = await photoRepository.GetPhotosAsync(vehicleId);
+
+            return mapper.Map<IEnumerable<Photo>, IEnumerable<PhotosResource>>(photos);
         }
 
         [HttpPost]

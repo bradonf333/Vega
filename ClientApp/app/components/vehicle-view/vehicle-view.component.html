@@ -66,6 +66,7 @@
         </div>
         <div class="panel-body">
           <input type="file" (change)="uploadPhoto()" #fileInput>
+          <img *ngFor="let photo of photos" src="/uploads/{{ photo.fileName }}" class="img-thumbnail">
         </div>
       </div>
     </div>
