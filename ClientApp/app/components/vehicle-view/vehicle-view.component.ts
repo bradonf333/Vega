@@ -1,6 +1,6 @@
 import { ProgressService } from './../../service/progress.service';
 import { PhotoService } from './../../service/photo.service';
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VehicleService } from '../../service/vehicle.service';
 
@@ -15,8 +15,10 @@ export class VehicleViewComponent implements OnInit {
   vehicleId: number;
   vehicle: any;
   photos: any[];
+  progress: any;
 
   constructor(
+    private zone: NgZone,
     private route: ActivatedRoute,
     private router: Router,
     private photoService: PhotoService,
@@ -59,8 +61,13 @@ export class VehicleViewComponent implements OnInit {
   uploadPhoto() {
     var nativeElement: HTMLInputElement = this.fileInput.nativeElement;
 
-    this.progressService.uploadProgress
-      .subscribe(progress => console.log(progress));
+    this.progressService.startTracking()
+      .subscribe(progress => {
+        console.log(progress);
+        this.zone.run(() => {
+          this.progress = progress;
+        });
+      });
 
     this.photoService.upload(this.vehicleId, nativeElement.files![0])
       .subscribe(photo => {
