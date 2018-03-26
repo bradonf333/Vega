@@ -1,3 +1,4 @@
+import { AuthService } from './service/auth.service';
 import { BrowserXhr } from '@angular/http';
 import { PaginationComponent } from './shared/pagination.component';
 import { VehicleService } from './service/vehicle.service';
@@ -48,7 +49,7 @@ import { ProgressService, BrowserXhrWithProgress } from "./service/progress.serv
     ],
     providers: [
         { provide: BrowserXhr, useClass: BrowserXhrWithProgress },
-        VehicleService, PhotoService, ProgressService 
+        VehicleService, PhotoService, ProgressService, AuthService
     ]
 })
 export class AppModuleShared {

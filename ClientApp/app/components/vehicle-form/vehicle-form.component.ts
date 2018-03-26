@@ -1,3 +1,4 @@
+import { AuthService } from './../../service/auth.service';
 import * as _ from 'underscore';
 import { Vehicle, SaveVehicle } from './../app/models/vehicle';
 import { FetchDataComponent } from './../fetchdata/fetchdata.component';
@@ -33,7 +34,8 @@ export class VehicleFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private vehicleService: VehicleService) {
+    private vehicleService: VehicleService,
+    private authService: AuthService) {
 
     route.params.subscribe(p => {
       this.vehicle.id = +p['id'];
@@ -113,5 +115,9 @@ export class VehicleFormComponent implements OnInit {
           this.router.navigate(['/home']);
         });
     }
+  }
+
+  login() {
+    this.authService.login();
   }
 }
