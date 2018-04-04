@@ -1,3 +1,4 @@
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AuthService } from './service/auth.service';
 import { BrowserXhr } from '@angular/http';
 import { PaginationComponent } from './shared/pagination.component';
@@ -29,7 +30,8 @@ import { ProgressService, BrowserXhrWithProgress } from "./service/progress.serv
         VehicleFormComponent,
         VehicleListComponent,
         PaginationComponent,
-        VehicleViewComponent
+        VehicleViewComponent,
+        UserProfileComponent
     ],
     imports: [
         CommonModule,
@@ -41,6 +43,7 @@ import { ProgressService, BrowserXhrWithProgress } from "./service/progress.serv
             { path: 'vehicles/new', component: VehicleFormComponent },
             { path: 'vehicles/:id', component: VehicleFormComponent },
             { path: 'vehicleView/:id', component: VehicleViewComponent },
+            { path: 'profile', component: UserProfileComponent },
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
@@ -53,4 +56,5 @@ import { ProgressService, BrowserXhrWithProgress } from "./service/progress.serv
     ]
 })
 export class AppModuleShared {
+
 }

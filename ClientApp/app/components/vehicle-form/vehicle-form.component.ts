@@ -34,8 +34,7 @@ export class VehicleFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private vehicleService: VehicleService,
-    private authService: AuthService) {
+    private vehicleService: VehicleService) {
 
     route.params.subscribe(p => {
       this.vehicle.id = +p['id'];
@@ -115,9 +114,5 @@ export class VehicleFormComponent implements OnInit {
           this.router.navigate(['/home']);
         });
     }
-  }
-
-  login() {
-    this.authService.login();
   }
 }

@@ -10,7 +10,9 @@ import { AppComponent } from './components/app/app.component';
     imports: [
         ServerModule,
         AppModuleShared
-    ]
+    ],
+    declarations: []
 })
 export class AppModule {
+    
 }
