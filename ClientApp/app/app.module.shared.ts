@@ -1,3 +1,4 @@
+import { AdminComponent } from './components/admin/admin.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { AuthService } from './service/auth.service';
 import { BrowserXhr } from '@angular/http';
@@ -22,6 +23,7 @@ import { ProgressService, BrowserXhrWithProgress } from "./service/progress.serv
 
 @NgModule({
     declarations: [
+        AdminComponent,
         AppComponent,
         NavMenuComponent,
         CounterComponent,
@@ -43,6 +45,7 @@ import { ProgressService, BrowserXhrWithProgress } from "./service/progress.serv
             { path: 'vehicles/new', component: VehicleFormComponent },
             { path: 'vehicles/:id', component: VehicleFormComponent },
             { path: 'vehicleView/:id', component: VehicleViewComponent },
+            { path: 'admin', component: AdminComponent },
             { path: 'profile', component: UserProfileComponent },
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
