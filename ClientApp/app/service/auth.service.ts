@@ -23,10 +23,7 @@ export class AuthService {
   constructor(public router: Router) {
 
     // Re-assign the roles property when user refreshes the browser
-    var id_token_payload: any = localStorage.getItem('id_token_payload');
-    if (id_token_payload) {
-      this.roles = id_token_payload;
-    }
+    this.readRolesFromLocalStorage();
 
   }
 
@@ -42,8 +39,8 @@ export class AuthService {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
-        this.roles = authResult.idTokenPayload['https://vega.com/roles'];
         this.setSession(authResult);
+        this.readRolesFromLocalStorage();
         this.router.navigate(['/vehicles']);
         console.log("authResult", authResult);
         console.log("Roles ", this.roles);
@@ -119,6 +116,16 @@ export class AuthService {
       }
       cb(err, profile);
     });
+  }
+
+  private readRolesFromLocalStorage() {
+
+    // Re-assign the roles property when user refreshes the browser
+    var id_token_payload: any = localStorage.getItem('id_token_payload');
+    if (id_token_payload) {
+      this.roles = id_token_payload;
+    }
+
   }
 
 }
