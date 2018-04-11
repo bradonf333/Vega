@@ -1,7 +1,9 @@
 import { Vehicle, SaveVehicle } from './../components/app/models/vehicle';
+
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
+import { AuthHttp } from "angular2-jwt/angular2-jwt";
 
 @Injectable()
 export class VehicleService {
@@ -11,7 +13,7 @@ export class VehicleService {
   private featuresUrl = '/api/features';
   private vehiclesUrl = '/api/vehicles';
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private authHttp: AuthHttp) { }
 
   getMakes() {
     return this.http.get(this.makesUrl)
@@ -24,23 +26,23 @@ export class VehicleService {
   }
 
   createVehicle(vehicle: any) {
-    return this.http.post(this.vehiclesUrl, vehicle)
+    return this.authHttp.post(this.vehiclesUrl, vehicle)
       .map(res => res.json());
+  }
+
+  updateVehicle(vehicle: SaveVehicle) {
+    return this.authHttp.put(this.vehiclesUrl + '/' + vehicle.id, vehicle)
+      .map(res => res.json);
+  }
+
+  deleteVehicle(id: number) {
+    return this.authHttp.delete(this.vehiclesUrl + '/' + id)
+      .map(res => res.json);
   }
 
   getVehicle(id: number) {
     return this.http.get(this.vehiclesUrl + '/' + id)
       .map(res => res.json());
-  }
-
-  updateVehicle(vehicle: SaveVehicle) {
-    return this.http.put(this.vehiclesUrl + '/' + vehicle.id, vehicle)
-      .map(res => res.json);
-  }
-
-  deleteVehicle(id: number) {
-    return this.http.delete(this.vehiclesUrl + '/' + id)
-      .map(res => res.json);
   }
 
   getVehicles(filter: any) {

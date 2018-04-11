@@ -1,3 +1,4 @@
+import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { AdminAuthGuard } from './service/admin-auth.guard';
 import { AuthGuard } from './service/auth.guard';
 import { AdminComponent } from './components/admin/admin.component';
@@ -21,7 +22,7 @@ import { CounterComponent } from './components/counter/counter.component';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 import { VehicleViewComponent } from './components/vehicle-view/vehicle-view.component';
 import { PhotoService } from "./service/photo.service";
-import { ProgressService, BrowserXhrWithProgress } from "./service/progress.service";
+
 
 @NgModule({
     declarations: [
@@ -56,9 +57,8 @@ import { ProgressService, BrowserXhrWithProgress } from "./service/progress.serv
         ])
     ],
     providers: [
-        { provide: BrowserXhr, useClass: BrowserXhrWithProgress },
-        VehicleService, PhotoService, ProgressService, 
-        AuthService, AuthGuard, AdminAuthGuard
+        VehicleService, PhotoService, 
+        AuthService, AuthGuard, AdminAuthGuard, AUTH_PROVIDERS
     ]
 })
 export class AppModuleShared {

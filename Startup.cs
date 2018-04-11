@@ -53,7 +53,7 @@ namespace vega
             }).AddJwtBearer(options =>
             {
                 options.Authority = "https://bradonf123.auth0.com/";
-                options.Audience = "https://api.vega.com";
+                options.Audience = "f0TYWWgPC192fqjiY4NT6TywFBKWLOza";
             });
         }
 

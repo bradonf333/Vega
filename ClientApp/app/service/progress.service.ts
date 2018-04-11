@@ -13,11 +13,15 @@ export class ProgressService {
   }
 
   notify(progress: any) {
-    this.uploadProgress.next(progress);
+    if (this.uploadProgress) {
+      this.uploadProgress.next(progress);
+    }
   }
 
   endTracking() {
-    this.uploadProgress.complete();
+    if (this.uploadProgress) {
+      this.uploadProgress.complete();
+    }
   }
 
   constructor() { }
@@ -46,7 +50,7 @@ export class BrowserXhrWithProgress extends BrowserXhr {
   private createProgress(event: any) {
     return {
       total: event.total,
-      percentage: Math.round(event.loaded / event.total * 100)
+      percentage: Math.round(event.loaded / event.total * 100),
     }
   }
 }
