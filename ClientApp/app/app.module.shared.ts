@@ -1,3 +1,4 @@
+import { ProgressService } from './service/progress.service';
 import { AUTH_PROVIDERS } from 'angular2-jwt';
 import { AdminAuthGuard } from './service/admin-auth.guard';
 import { AuthGuard } from './service/auth.guard';
@@ -45,8 +46,8 @@ import { PhotoService } from "./service/photo.service";
         RouterModule.forRoot([
             { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
             { path: 'vehicles', component: VehicleListComponent },
-            { path: 'vehicles/new', component: VehicleFormComponent },
-            { path: 'vehicles/:id', component: VehicleFormComponent },
+            { path: 'vehicles/new', component: VehicleFormComponent, canActivate: [AuthGuard]  },
+            { path: 'vehicles/:id', component: VehicleFormComponent, canActivate: [AuthGuard]  },
             { path: 'vehicleView/:id', component: VehicleViewComponent },
             { path: 'admin', component: AdminComponent, canActivate: [AdminAuthGuard] },
             { path: 'profile', component: UserProfileComponent },
@@ -57,7 +58,7 @@ import { PhotoService } from "./service/photo.service";
         ])
     ],
     providers: [
-        VehicleService, PhotoService, 
+        VehicleService, PhotoService, ProgressService,
         AuthService, AuthGuard, AdminAuthGuard, AUTH_PROVIDERS
     ]
 })

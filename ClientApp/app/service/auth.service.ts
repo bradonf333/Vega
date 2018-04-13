@@ -17,7 +17,7 @@ export class AuthService {
   });
 
   userProfile: any;
-  private roles: any;
+  private roles: any = [];
 
 
   constructor(public router: Router) {

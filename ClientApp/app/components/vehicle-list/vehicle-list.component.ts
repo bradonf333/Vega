@@ -1,3 +1,4 @@
+import { AuthService } from './../../service/auth.service';
 import { PaginationComponent } from './../../shared/pagination.component';
 import { Component, OnInit } from '@angular/core';
 import { Vehicle, KeyValuePair } from '../app/models/vehicle';
@@ -25,7 +26,7 @@ export class VehicleListComponent implements OnInit {
     { title: 'View Vehicle' },
   ];
 
-  constructor(private vehicleService: VehicleService) {
+  constructor(private vehicleService: VehicleService, private auth: AuthService) {
     this.makes = [];
    }
 

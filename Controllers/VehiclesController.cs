@@ -78,7 +78,7 @@ namespace vega.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize("RequireAdminRole")]
         public async Task<IActionResult> DeleteVehicle(int id)
         {
             var vehicle = await repository.GetVehicleAsync(id, includeRelated: false);

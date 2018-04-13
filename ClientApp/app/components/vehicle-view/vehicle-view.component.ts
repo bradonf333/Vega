@@ -1,3 +1,4 @@
+import { AuthService } from './../../service/auth.service';
 import { ProgressService } from './../../service/progress.service';
 import { PhotoService } from './../../service/photo.service';
 import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
@@ -23,7 +24,8 @@ export class VehicleViewComponent implements OnInit {
     private router: Router,
     private photoService: PhotoService,
     private vehicleService: VehicleService,
-    private progressService: ProgressService) {
+    private progressService: ProgressService,
+    private auth: AuthService) {
 
     route.params.subscribe(p => {
       this.vehicleId = +p['id'];

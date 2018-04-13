@@ -41,6 +41,11 @@ namespace vega
 
             services.AddDbContext<VegaDbContextV2>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+            services.AddAuthorization(options => {
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireClaim("https://vega.com/roles", "admin"));
+            });
+            
             services.AddMvc();
 
             // Auth0

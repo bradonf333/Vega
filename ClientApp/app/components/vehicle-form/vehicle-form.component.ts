@@ -34,7 +34,8 @@ export class VehicleFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private vehicleService: VehicleService) {
+    private vehicleService: VehicleService,
+    private auth: AuthService) {
 
     route.params.subscribe(p => {
       this.vehicle.id = +p['id'];

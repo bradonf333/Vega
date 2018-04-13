@@ -21,7 +21,9 @@
       <br *ngFor="let number of [0,1,2,3,4,5,6,7,8,9]">
 
       <div class="table-responsive">
-        <a [routerLink]="['/vehicles/new']" class="btn btn-primary">New Vehicle</a>
+        <p *ngIf="auth.isAuthenticated()">
+          <a [routerLink]="['/vehicles/new']" class="btn btn-primary">New Vehicle</a>
+        </p>
         <br>
         <br>
 
@@ -31,10 +33,7 @@
               <th *ngFor="let c of columns">
                 <div *ngIf="c.isSortable" (click)="sortBy(c.key)">
                   {{ c.title }}
-                  <i *ngIf="query.sortBy === c.key" 
-                      class="fa" 
-                      [class.fa-sort-asc]="query.isSortAscending" 
-                      [class.fa-sort-desc]="!query.isSortAscending">
+                  <i *ngIf="query.sortBy === c.key" class="fa" [class.fa-sort-asc]="query.isSortAscending" [class.fa-sort-desc]="!query.isSortAscending">
                   </i>
                 </div>
                 <div *ngIf="!c.isSortable">{{ c.title }}</div>

@@ -104,7 +104,7 @@
         </div>
 
         <button class="btn btn-primary" [disabled]="!vehicleForm.valid">Save</button>
-        <button *ngIf="vehicle.id" class="btn btn-danger" type="button" (click)="delete()">Delete</button>
+        <button *ngIf="vehicle.id && auth.isInRole('admin')" class="btn btn-danger" type="button" (click)="delete()">Delete</button>
 
       </form>
     </div>
