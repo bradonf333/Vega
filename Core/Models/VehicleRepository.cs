@@ -40,8 +40,6 @@ namespace vega.Models
             var query = dbContext.Vehicles
                 .Include(v => v.Model)
                 .ThenInclude(m => m.Make)
-                // .Include (v => v.Features)
-                // .ThenInclude (vf => vf.Feature)
                 .AsQueryable();
 
             query = query.ApplyFiltering(queryObj);
